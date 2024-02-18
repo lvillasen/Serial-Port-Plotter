@@ -4,6 +4,7 @@ This app plots and prints the data read by the serial port.   It can be useful t
 ## Usage
 
 - Clone the repository
+- Connect a serial port cable between the computer and a source device.
 - Open the file index.html with any web browser that support the Web Serial API.
 
 ## Live Demo

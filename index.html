@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Serial Port Data Plot</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="./serial-port-plotter.css">
+</head>
+<body>
+  <div class="block_container"  style="background-color: #00b5e2; margin-left:10%; margin-right:10%;">    <p> </p>
+    <p> </p>
+    <br>
+
+
+
+    <div id="block_container" >
+    <p> </p>
+    <p> </p>
+
+        <h1> Serial Port Plotter</h1>
+        <h2> CIIEC-BUAP</h2>
+   <p style="font-size: 30px; margin-left: 80%;">February, 18th, 2024 </p>
+        <p style="font-size: 20px; margin-left: 80%;"><a href="https://github.com/lvillasen/Serial-Port-Plotter" >Source Code</a> </p>
+
+        <hr>
+            
+        <h2> Introduction</h2>
+
+<p style="color:black;font-size:30px;">
+This app plots and prints the data read by the serial port. 
+<br><br>
+It can be useful to debug the acquisition software in projects where an Arduino, ESP32, or any other microcontroller, feeds data into a computer by the serial port. </p>
+
+<p style="color:black;font-size:30px;">
+You can use an inexpensive ESP32 microcontoller, such as the one shown in the picture below, to get signals from a variety of sensors and send the data to a computer by the serial port. 
+</p>
+     <center><img src="./ESP32.png" alt="Trulli" width="50%"></center>
+    <br><br>
+<p style="color:black;font-size:30px;">
+The data columns are separated by one space. The shown below can be downloaded into an Arduino or ESP32 microcontroller with Arduino IDE to generate two sine waves of frequency 1.0 and 2.0 Hz with a sampling rate of 500 Hz.
+</p>
+    <br><br>
+
+    <pre style="background-color: lightblue; margin-left:5%; margin-right:5%;">
+
+    #define PI 3.14159265
+    unsigned long target = 0L ;
+    int n_data = -1;
+    unsigned long current;
+    unsigned long previous = 0L;
+    float f1 = 1.0;
+    float f2 = 2.0;
+    const unsigned long periodSamplingMicros = 2000;  // 2 miliseconds 
+
+    void setup(){
+      Serial.begin(230400); //begin serial communications
+      while(true){
+      actual = micros();
+    if (current - previous >= periodSamplingMicros ){
+    n_data ++;
+    if (n_data >= 10000){ n_data = 0;}
+      Serial.print(String(1000 + round(1000*sin(2*PI*f1*n_data*0.002))));
+      Serial.print(" "); 
+      Serial.print(String(2000 + round(1000*sin(2*PI*f2*n_data*0.002))));
+      Serial.print(" "); 
+      Serial.print(String(current-previous));
+      Serial.print(" "); 
+      Serial.println((String(n_data));
+
+    previous = current; 
+      }
+      }
+    }
+
+    void loop(){}
+
+</pre>
+    <br><br>
+
+    <p style="color:black;font-size:30px;">
+The image below shows an screenshot of the plot produced by this app in that case.
+</p>
+    <br><br>
+     <center><img src="./screenshot.png" alt="Trulli" width="50%"></center>
+    <br><br>
+<hr>
+
+    </div>
+
+<div class="block_container" >
+
+        <div class="block_container" >
+    
+    <label style="font-size: 15pt;margin-left: 20px;"> Serial port speed:  </label>
+<select name="speed" id="SerialSpeed">
+  <option value="1200">1200</option>
+  <option value="2400">2400</option>
+  <option value="4800">4800</option>
+  <option value="9600">9600</option>
+  <option value="19200">19200</option>
+  <option value="38400">38400</option>
+  <option value="57600">57600</option>
+  <option value="115200">115200</option>
+  <option value="230400" selected >230400</option>
+</select>
+
+ <input class="favorite styled" type="button" id="SerialConnectButton" value="Connect" ;>
+
+    <label style="font-size: 15pt;margin-left: 20px;"> Column:  </label>
+    <input id="Column" style="width:5%;" value="0" type="text" onchange="select_column() >
+
+<label style="font-size: 15pt;margin-left: 20px;"> Number of Points in Plot:  </label>
+        <input id="points_max" style="width:5%;" value="1000" type="text" >
+       
+
+<label style="font-size: 15pt;margin-left: 20px;"> Read Port Every (ms):  </label>
+        <input id="time_update" style="width:5%;" value="20" type="text" >
+
+
+  </div>
+         
+
+
+   
+<div id="plot_data" style= " border:solid 5px #003b5c; width:100%;"></div>
+</div>
+<hr>
+
+
+
+<label style="font-size: 15pt;margin-left: 20px;"> Data:  </label>
+
+
+<textarea id="display_data" style= "white-space: pre; border:solid 5px #003b5c;" rows="20" cols="120"></textarea>
+<hr>
+   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</body>
+<script src="./serial-port-plotter.js"></script>
+</html>
+

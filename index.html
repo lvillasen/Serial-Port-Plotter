@@ -43,7 +43,6 @@ The data columns are separated by one space. The code shown below can be downloa
     <br><br>
 
     <pre style="background-color: lightblue; margin-left:5%; margin-right:5%;">
-
     #define PI 3.14159265
     unsigned long target = 0L ;
     int n_data = -1;
@@ -56,7 +55,7 @@ The data columns are separated by one space. The code shown below can be downloa
     void setup(){
       Serial.begin(230400); //begin serial communications
       while(true){
-      actual = micros();
+      current = micros();
     if (current - previous >= periodSamplingMicros ){
     n_data ++;
     if (n_data >= 10000){ n_data = 0;}
@@ -66,7 +65,7 @@ The data columns are separated by one space. The code shown below can be downloa
       Serial.print(" "); 
       Serial.print(String(current-previous));
       Serial.print(" "); 
-      Serial.println((String(n_data));
+      Serial.println((String(n_data)));
 
     previous = current; 
       }

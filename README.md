@@ -7,7 +7,7 @@ The data columns are separated by one space. The included file ESP32-Sine.ino ca
 
 - Clone the repository
 - Connect a serial port cable between the computer and a source device.
-- Open the file index.html with any web browser that support the Web Serial API.
+- Open the file index.html with any web browser that supports the Web Serial API.
 
 ## Live Demo
 
